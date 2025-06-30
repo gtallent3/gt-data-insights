@@ -1,0 +1,1 @@
+To run this dashboard in terminal use streamlit run improve_compliance_dashboard.py
