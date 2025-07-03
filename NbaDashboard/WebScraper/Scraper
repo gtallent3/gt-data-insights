@@ -1,0 +1,85 @@
+from selenium import webdriver
+from bs4 import BeautifulSoup, Comment
+import pandas as pd
+import time
+
+start_year = 2010
+end_year = 2024
+
+# Set up Chrome headless browser
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")
+driver = webdriver.Chrome(options=options)
+
+per_game_data = []
+advanced_data = []
+
+for year in range(start_year, end_year + 1):
+    url = f"https://www.basketball-reference.com/leagues/NBA_{year}.html"
+    season_str = f"{year - 1}-{str(year)[-2:]}"
+    print(f"🔄 Loading {url}...")
+
+    driver.get(url)
+    time.sleep(3)
+    html = driver.page_source
+    soup = BeautifulSoup(html, "html.parser")
+
+    # ----- Per Game Table -----
+    pg_table = soup.find("table", {"id": "per_game-team"})
+    if pg_table is None:
+        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+        for comment in comments:
+            comment_soup = BeautifulSoup(comment, "html.parser")
+            pg_table = comment_soup.find("table", {"id": "per_game-team"})
+            if pg_table:
+                break
+
+    if pg_table:
+        df_pg = pd.read_html(str(pg_table))[0]
+        df_pg = df_pg[df_pg["Team"] != "League Average"]
+        df_pg["Season"] = season_str
+        per_game_data.append(df_pg)
+        print(f"✅ Per Game loaded for {season_str}")
+    else:
+        print(f"❌ Per Game table not found for {season_str}")
+
+    # ----- Advanced Stats Table -----
+    adv_table = soup.find("table", {"id": "advanced-team"})
+    if adv_table is None:
+        for comment in comments:
+            comment_soup = BeautifulSoup(comment, "html.parser")
+            adv_table = comment_soup.find("table", {"id": "advanced-team"})
+            if adv_table:
+                break
+
+    if adv_table:
+        df_adv = pd.read_html(str(adv_table))[0]
+
+        # Flatten MultiIndex columns if needed
+        if isinstance(df_adv.columns, pd.MultiIndex):
+            df_adv.columns = [' '.join(col).strip() for col in df_adv.columns.values]
+
+        # Try to locate the "Team" column dynamically
+        team_col = next((col for col in df_adv.columns if "Team" in col), None)
+
+        if team_col:
+            df_adv = df_adv[df_adv[team_col] != "League Average"]
+            df_adv["Season"] = season_str
+            df_adv.rename(columns={team_col: "Team"}, inplace=True)
+            advanced_data.append(df_adv)
+            print(f"✅ Advanced loaded for {season_str}")
+        else:
+            print(f"❌ 'Team' column not found for advanced stats in {season_str}")
+
+driver.quit()
+
+# Save combined datasets
+if per_game_data:
+    full_pg_df = pd.concat(per_game_data, ignore_index=True)
+    full_pg_df.to_csv("nba_per_game_2010_2024.csv", index=False)
+    print("📁 Saved per-game stats to nba_per_game_2010_2024.csv")
+
+if advanced_data:
+    full_adv_df = pd.concat(advanced_data, ignore_index=True)
+    full_adv_df.to_csv("nba_advanced_2010_2024.csv", index=False)
+    print("📁 Saved advanced stats to nba_advanced_2010_2024.csv")
