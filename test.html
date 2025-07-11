@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GT Data & Insights</title>
+  <link rel="icon" type="image/png" href="favicon.png" sizes="96x96" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #f5f5f5;
+      text-align: center;
+      scroll-behavior: smooth;
+    }
+
+    nav {
+      background-color: #121212;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #f5f5f5;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #1a73e8;
+    }
+
+    .hero {
+      background-image: url("WebsiteImage.png");
+      background-size: cover;
+      background-position: center;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      color: white;
+    }
+
+    main {
+      padding: 2rem 1rem;
+    }
+
+    section {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #1a73e8;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    a.button:hover {
+      background-color: #1665c1;
+    }
+
+    footer {
+      margin-top: 3rem;
+      color: #888;
+      font-size: 0.9rem;
+      padding-bottom: 1rem;
+    }
+
+    a {
+      color: #66b2ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#ask">Ask Me Anything</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>GT Data & Insights</h1>
+  </div>
+
+  <main>
+    <section id="about">
+      <h2>About This Site</h2>
+      <p>Welcome to GT Data & Insights — a space where I explore real-world data to uncover patterns and support smart decision-making.</p>
+      <p>As someone passionate about data science, analytics, and finance, I use this site to share projects, dashboards, and ideas.</p>
+    </section>
+
+    <section id="dashboard">
+      <h2>📊 Featured Dashboard</h2>
+      <p>Explore my live dashboard built with Streamlit, analyzing compliance data from the NYC Business Integrity Commission.</p>
+      <a href="https://bic-dashboard.streamlit.app/" class="button" target="_blank">View BIC Dashboard</a>
+    </section>
+
+    <section id="ask">
+      <h2>Ask Me Anything</h2>
+      <p>Curious about my projects, have a data-related question, an insight to share, or an idea for a project you'd like to see? Let's connect.</p>
+      <a href="mailto:gtallent3@icloud.com" class="button">Send a Question</a>
+    </section>
+
+    <section id="contact">
+      <h2>Connect with Me</h2>
+      <p>
+        <a href="https://www.linkedin.com/in/guy-tallent-a65b52254/" target="_blank">LinkedIn</a> |
+        <a href="https://github.com/gtallent3" target="_blank">GitHub</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 GT Data & Insights
+  </footer>
+</body>
+</html>
