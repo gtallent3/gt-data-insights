@@ -13,14 +13,24 @@
       text-align: center;
     }
 
-    header {
-      background-color: #1a73e8;
-      padding: 2rem 1rem;
+    .hero {
+      background-image: url("WebsiteImage.png");
+      background-size: cover;
+      background-position: center;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+    .hero h1 {
+      font-size: 3.5rem;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      color: white;
     }
 
     .subtitle {
@@ -75,10 +85,10 @@
   </style>
 </head>
 <body>
-  <header>
+
+  <div class="hero">
     <h1>GT Data & Insights</h1>
-    <p class="subtitle">Turning data into actionable insights.</p>
-  </header>
+  </div>
 
   <main>
     <section>
