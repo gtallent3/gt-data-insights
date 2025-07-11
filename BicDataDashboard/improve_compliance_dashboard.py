@@ -28,7 +28,7 @@ st.set_page_config(page_title="NYC BIC Compliance Dashboard", layout="wide")
 
 def load_data():
     complaints = pd.read_csv("datasets/BIC_Complaints_Inquiries_20250612.csv")
-    violations = pd.read_csv("datasets/BIC_Issued_Violations_20250612.csv")
+    violations = pd.read_csv("https://drive.google.com/uc?export=download&id=1SOaADySZRl_mHg--NA4M0ZiORSecljwI")
     return complaints, violations
 
 complaints_df, violations_df = load_data()
