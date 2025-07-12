@@ -40,7 +40,7 @@ html, body {
 
 /* Hero Section */
 .hero {
-  background-image: url("../WebsiteImage.png");
+  background-image: url("WebsiteImage.png");
   background-size: cover;
   background-position: center;
   height: 90vh;
