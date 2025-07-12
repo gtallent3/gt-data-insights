@@ -76,6 +76,20 @@ tabs = st.tabs(["Overview & Summary", "Long Term Trends", "Violation Categories"
 # --- Overview Tab ---
 with tabs[0]:
 
+    st.markdown("### Overview & Key Questions")
+    st.markdown(
+        """
+        This dashboard explores trends in enforcement, fine issuance, and business behavior using NYC BIC data.
+
+        **Key Questions:**
+        - Does increasing fine severity lead to improved compliance behavior?
+        - Which violation types are the most common?
+        - Which accounts are the most frequent violators?
+        """
+    )
+
+    st.markdown("---")  # Visual separator
+
     st.markdown("### Summary Statistics (Since 2015)")
 
     min_year, max_year = int(violations_df['DATE VIOLATION ISSUED'].dt.year.min()), int(violations_df['DATE VIOLATION ISSUED'].dt.year.max())
@@ -108,20 +122,6 @@ with tabs[0]:
     col7.metric("Total Accounts Fined", f"{total_accounts:,}")
     col8.metric("Avg Violations per Account", f"{avg_violations_per_account:.2f}")
     col9.metric("Avg Fines per Account", f"${avg_fines_per_account:,.2f}")
-
-    st.markdown("---")  # Visual separator
-
-    st.markdown("### Overview & Key Questions")
-    st.markdown(
-        """
-        This dashboard explores trends in enforcement, fine issuance, and business behavior using NYC BIC data.
-
-        **Key Questions:**
-        - Does increasing fine severity lead to improved compliance behavior?
-        - Which violation types are the most common?
-        - Which accounts are the most frequent violators?
-        """
-    )
 
 # --- Trends Over Time ---
 with tabs[1]:
