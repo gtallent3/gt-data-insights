@@ -58,4 +58,5 @@ def render_tab_content(tab):
 register_overview_callbacks(app, violations_df)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+   #app.run(debug=True)
+   app.run_server(host="0.0.0.0", port=8080)
