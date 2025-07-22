@@ -1,0 +1,1 @@
+web: gunicorn dashboard.dashBic.app:server
