@@ -14,14 +14,15 @@ from layout.takeaways import render_key_takeaways_tab
 # Prepare data
 complaints_df, violations_df = load_and_prepare_data()
 
-# App setup
+# --- Dash App Setup ---
 app = dash.Dash(
     __name__,
+    requests_pathname_prefix='/dashboard/',  # 👈 This allows subpath routing!
     external_stylesheets=["https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css"],
     suppress_callback_exceptions=True
 )
 app.title = "NYC BIC Compliance Dashboard"
-server = app.server  # for deployment
+server = app.server  # 👈 Render uses this for deployment
 
 # App layout
 app.layout = dbc.Container([
