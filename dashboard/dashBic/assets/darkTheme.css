@@ -30,30 +30,58 @@ input[type="radio"] {
     background-color: #1e1e1e !important;
 }
 
-/* Bootstrap Cards and Containers */
-.card, .container, .row, .col, .dash-bootstrap {
+/* Bootstrap Cards */
+.card {
     background-color: #1e1e1e !important;
     color: white !important;
+    width: 100% !important;
+    margin-bottom: 1rem;
 }
 
-/* Metrics or text-muted */
+.card-header {
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: #2a2a2a !important;
+    border-bottom: 1px solid #333;
+}
+
+.card-body .card-title {
+    font-size: 1.5rem;
+}
+
+/* Container, Row, Col */
+.container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.row {
+    margin: 0;
+}
+
+.col {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+/* Muted text */
 .text-muted {
     color: #aaaaaa !important;
 }
 
-/* Horizontal line styling */
+/* Horizontal rule */
 hr {
     border-top: 1px solid #333;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
-/* Fix dash components padding */
+/* Fix Dash components padding */
 .dash-bootstrap .form-check {
     margin-bottom: 0.5rem;
 }
 
-/* Radio buttons inline alignment */
+/* Inline radio buttons */
 .dash-bootstrap .form-check-inline {
     margin-right: 1rem;
 }
@@ -65,7 +93,7 @@ hr {
     border: 1px solid #444 !important;
 }
 
-/* Scrollbars (for aesthetics) */
+/* Scrollbar styling */
 ::-webkit-scrollbar {
     width: 8px;
 }
