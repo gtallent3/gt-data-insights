@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import pandas as pd
 
 def render_trends(complaints_df, violations_df):
+    # --- Data Preparation ---
     yearly_counts = pd.DataFrame({
         'Complaints': complaints_df.groupby('Year').size(),
         'Violations': violations_df.groupby('Year').size()
@@ -29,6 +30,7 @@ def render_trends(complaints_df, violations_df):
     merged = pd.merge(yearly_counts, avg_fine[['Year', 'AverageFine']], on='Year', how='left')
     merged = pd.merge(merged, first_seen_years[['Year', 'CumulativeViolationTypes']], on='Year', how='left')
 
+    # --- Figure 1: Trends ---
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=merged['Year'], y=merged['Complaints'], mode='lines+markers', name='Complaints'))
     fig.add_trace(go.Scatter(x=merged['Year'], y=merged['Violations'], mode='lines+markers', name='Violations'))
@@ -48,8 +50,7 @@ def render_trends(complaints_df, violations_df):
         font_color='white'
     )
 
-        # --- New Violation Types Chart ---
-
+    # --- Figure 2: New Violation Types ---
     new_violations_df = (
         violations_df.dropna(subset=['DESCRIPTION OF RULE', 'DATE VIOLATION ISSUED'])
         .groupby('DESCRIPTION OF RULE')['DATE VIOLATION ISSUED']
@@ -90,10 +91,10 @@ def render_trends(complaints_df, violations_df):
         font_color='white'
     )
 
-    # --- Combine Both Charts ---
-    return html.Div([
+    # --- Combine Both Charts with Consistent Bootstrap Layout ---
+    return dbc.Container([
         html.H4("Long Term Trends"),
         dcc.Graph(figure=fig, style={"marginBottom": "40px"}),
         html.H4("New Violation Types Introduced"),
         dcc.Graph(figure=new_types_fig)
-    ])
+    ], className="mt-4")

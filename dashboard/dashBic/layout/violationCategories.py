@@ -5,16 +5,11 @@ import dash_bootstrap_components as dbc
 from dash import html, dcc
 
 def render_violation_categories(violations_df):
-    # Top 10 ShortLabel types
-    top_labels = (
-        violations_df['ShortLabel'].value_counts()
-        .head(10)
-        .index.tolist()
-    )
-
+    # --- Top 10 Violation Types ---
+    top_labels = violations_df['ShortLabel'].value_counts().head(10).index.tolist()
     filtered = violations_df[violations_df['ShortLabel'].isin(top_labels)].dropna(subset=['ShortLabel'])
 
-    # Aggregated stats
+    # --- Summary Stats ---
     stats = (
         filtered.groupby('ShortLabel')['FINE AMOUNT']
         .agg(['mean', 'median', 'min', 'max'])
@@ -23,15 +18,12 @@ def render_violation_categories(violations_df):
     )
 
     counts = (
-        filtered['ShortLabel']
-        .value_counts()
+        filtered['ShortLabel'].value_counts()
         .rename_axis('ShortLabel')
         .reset_index(name='Count')
     )
 
-    descriptions = (
-        filtered.drop_duplicates(subset='ShortLabel')[['ShortLabel', 'DESCRIPTION OF RULE']]
-    )
+    descriptions = filtered.drop_duplicates(subset='ShortLabel')[['ShortLabel', 'DESCRIPTION OF RULE']]
 
     top_types = (
         counts.merge(stats, on='ShortLabel')
@@ -39,7 +31,7 @@ def render_violation_categories(violations_df):
               .sort_values(by="Count", ascending=False)
     )
 
-    # Percent metrics
+    # --- Global Percent Metrics ---
     all_violations = violations_df.shape[0]
     all_fines = violations_df['FINE AMOUNT'].sum()
 
@@ -50,7 +42,7 @@ def render_violation_categories(violations_df):
     pct_violations = (top10_violations / all_violations) * 100
     pct_fines = (top10_fines / all_fines) * 100
 
-    # Bar Chart
+    # --- Bar Chart (Top Violation Types) ---
     fig_vio = px.bar(
         top_types,
         x='Count',
@@ -70,7 +62,7 @@ def render_violation_categories(violations_df):
         font_color='white'
     )
 
-    # Box Plot for Fine Distribution
+    # --- Box Plot (Fine Distribution) ---
     summary_stats = (
         filtered.groupby('ShortLabel')['FINE AMOUNT']
         .agg(Min='min', Median='median', Max='max')
@@ -93,6 +85,7 @@ def render_violation_categories(violations_df):
                 "Max: $%{customdata[2]:,.0f}<extra></extra>"
             )
         ))
+
     fig_box.update_layout(
         title="Fine Distribution by Violation Type",
         yaxis_title="Fine ($)",
@@ -105,35 +98,29 @@ def render_violation_categories(violations_df):
         font_color='white'
     )
 
-    # Render full layout
+    # --- Render Layout ---
     return dbc.Container([
-        html.H4("Top 10 Violation Types Summary", className="mb-3"),
+        html.H4("Top 10 Violation Types Summary", className="mb-4"),
         dbc.Row([
-            dbc.Col([
-                dbc.Card([
-                    dbc.CardHeader("Violations from Top 10"),
-                    dbc.CardBody(html.H5(f"{top10_violations:,}"))
-                ])
-            ]),
-            dbc.Col([
-                dbc.Card([
-                    dbc.CardHeader("Percent of All Violations"),
-                    dbc.CardBody(html.H5(f"{pct_violations:.2f}%"))
-                ])
-            ]),
-            dbc.Col([
-                dbc.Card([
-                    dbc.CardHeader("Fines from Top 10"),
-                    dbc.CardBody(html.H5(f"${top10_fines:,.2f}"))
-                ])
-            ]),
-            dbc.Col([
-                dbc.Card([
-                    dbc.CardHeader("Percent of All Fines"),
-                    dbc.CardBody(html.H5(f"{pct_fines:.2f}%"))
-                ])
-            ])
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Violations from Top 10"),
+                dbc.CardBody(html.H5(f"{top10_violations:,}", className="card-title"))
+            ]), md=3),
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Percent of All Violations"),
+                dbc.CardBody(html.H5(f"{pct_violations:.2f}%", className="card-title"))
+            ]), md=3),
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Fines from Top 10"),
+                dbc.CardBody(html.H5(f"${top10_fines:,.2f}", className="card-title"))
+            ]), md=3),
+            dbc.Col(dbc.Card([
+                dbc.CardHeader("Percent of All Fines"),
+                dbc.CardBody(html.H5(f"{pct_fines:.2f}%", className="card-title"))
+            ]), md=3)
         ], className="mb-4"),
-        dcc.Graph(figure=fig_vio),
-        dcc.Graph(figure=fig_box)
-    ])
+        html.Div([
+            dcc.Graph(figure=fig_vio, className="mb-5"),
+            dcc.Graph(figure=fig_box)
+        ])
+    ], className="mt-4")

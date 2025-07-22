@@ -23,7 +23,6 @@ def render_frequent_violators_tab(violations_df):
             ])
         ], className="mb-3"),
 
-        # Just an empty toggle placeholder to satisfy Dash's callback registry
         html.Div(dcc.RadioItems(id="fine-metric-toggle", value="TotalFines"), style={"display": "none"}),
 
         html.Div(id="frequent-violators-content")
@@ -69,45 +68,73 @@ def update_frequent_violators(rank_by, fine_metric):
     pct_fines = (top10_fines / total_fines) * 100
 
     summary = dbc.Row([
-        dbc.Col([
-            html.H6("Violations by Top 10"),
-            html.H5(f"{top10_violations:,}"),
-            html.P(f"{pct_violations:.2f}% of all violations", className="text-muted")
-        ]),
-        dbc.Col([
-            html.H6("Fines from Top 10"),
-            html.H5(f"${top10_fines:,.2f}"),
-            html.P(f"{pct_fines:.2f}% of all fines", className="text-muted")
-        ])
+        dbc.Col(dbc.Card([
+            dbc.CardHeader("Violations from Top 10"),
+            dbc.CardBody([
+                html.H4(f"{top10_violations:,}", className="card-title"),
+            ])
+        ], color="dark", inverse=True), md=3),
+
+        dbc.Col(dbc.Card([
+            dbc.CardHeader("Percent of All Violations"),
+            dbc.CardBody([
+                html.H4(f"{pct_violations:.2f}%", className="card-title"),
+            ])
+        ], color="dark", inverse=True), md=3),
+
+        dbc.Col(dbc.Card([
+            dbc.CardHeader("Fines from Top 10"),
+            dbc.CardBody([
+                html.H4(f"${top10_fines:,.2f}", className="card-title"),
+            ])
+        ], color="dark", inverse=True), md=3),
+
+        dbc.Col(dbc.Card([
+            dbc.CardHeader("Percent of All Fines"),
+            dbc.CardBody([
+                html.H4(f"{pct_fines:.2f}%", className="card-title"),
+            ])
+        ], color="dark", inverse=True), md=3)
     ], className="mb-4")
 
-    # Main bar chart
+    # 🔧 FIXED: Main Bar Chart with Dual Y-Axis (Matching Screenshot)
     fig_main = go.Figure()
+
+    # Total Fines bar - left y-axis
     fig_main.add_trace(go.Bar(
         x=top10_summary['ACCOUNT NAME'],
-        y=top10_summary[rank_by],
-        name=rank_by,
-        marker_color='indianred' if rank_by == 'TotalFines' else 'steelblue',
-        yaxis='y1',
-        offsetgroup=0
+        y=top10_summary['TotalFines'],
+        name='Total Fines',
+        marker_color='indianred',
+        offsetgroup=0,
+        yaxis='y1'
     ))
 
-    secondary_metric = 'ViolationCount' if rank_by == 'TotalFines' else 'TotalFines'
+    # Violation Count bar - right y-axis
     fig_main.add_trace(go.Bar(
         x=top10_summary['ACCOUNT NAME'],
-        y=top10_summary[secondary_metric],
-        name=secondary_metric,
-        marker_color='steelblue' if rank_by == 'TotalFines' else 'indianred',
-        yaxis='y2',
-        offsetgroup=1
+        y=top10_summary['ViolationCount'],
+        name='Violation Count',
+        marker_color='steelblue',
+        offsetgroup=1,
+        yaxis='y2'
     ))
 
     fig_main.update_layout(
-        title=f"Top 10 Accounts by {'Total Fines' if rank_by == 'TotalFines' else 'Violation Count'}",
+        title="Top 10 Accounts by Total Fines & Violation Count",
         xaxis=dict(title='Account Name', tickangle=-45),
-        yaxis=dict(title=rank_by, side='left', showgrid=True),
-        yaxis2=dict(title=secondary_metric, overlaying='y', side='right', showgrid=False),
-        barmode='group',
+        yaxis=dict(
+            title='Total Fines ($)',
+            side='left',
+            showgrid=True
+        ),
+        yaxis2=dict(
+            title='Violation Count',
+            side='right',
+            overlaying='y',
+            showgrid=False
+        ),
+        barmode='group',  # crucial for side-by-side bars
         height=600,
         plot_bgcolor='#1e1e1e',
         paper_bgcolor='#1e1e1e',
@@ -115,7 +142,7 @@ def update_frequent_violators(rank_by, fine_metric):
         legend=dict(x=0.5, y=1.15, orientation='h', xanchor='center')
     )
 
-    # Fine metric toggle to control the 10 time series charts (placed BELOW main chart)
+    # Time Series Toggle
     fine_toggle = dbc.Row([
         dbc.Col([
             html.Label("Choose Fine Metric for Time Series:"),
@@ -132,7 +159,7 @@ def update_frequent_violators(rank_by, fine_metric):
         ])
     ], className="my-4")
 
-    # Time Series
+    # Time Series Charts for Top Accounts
     plot_df = (
         top10_data
         .groupby(['ACCOUNT NAME', 'Year'])

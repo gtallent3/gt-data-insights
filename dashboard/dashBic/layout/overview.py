@@ -20,7 +20,10 @@ def render_overview(df):
             marks={year: str(year) for year in range(2015, 2026)},
             step=1
         ),
-        html.Div(id="summary-stats", className="mt-4")
+        dbc.Row(
+            dbc.Col(html.Div(id="summary-stats"), width=12),
+            className="mt-4"
+        )
     ])
 
 def register_overview_callbacks(app, violations_df):

@@ -5,12 +5,13 @@ import dash_bootstrap_components as dbc
 from dash import html, dcc
 
 def render_fine_violation_tab(violations_df):
+    # --- Clean & Prepare Data ---
     violations_df['Year'] = pd.to_datetime(violations_df['DATE VIOLATION ISSUED'], errors='coerce').dt.year
     violations_df = violations_df[violations_df['Year'] >= 2015]
 
     top10_labels = violations_df['ShortLabel'].value_counts().head(10).index
 
-    # --- Correlation Chart: Avg Fine vs Count ---
+    # --- Correlation Data ---
     corr_df = (
         violations_df[violations_df['ShortLabel'].isin(top10_labels)]
         .dropna(subset=['FINE AMOUNT', 'Year'])
@@ -29,10 +30,11 @@ def render_fine_violation_tab(violations_df):
         .corr()
         .iloc[0::2, -1]
         .reset_index()
-        .rename(columns={'ShortLabel': 'ShortLabel', 'ViolationCount': 'Correlation'})
+        .rename(columns={'ViolationCount': 'Correlation'})
         .drop(columns=['level_1'])
     )
 
+    # --- Correlation Chart ---
     fig_corr = px.bar(
         corr_result.sort_values(by='Correlation'),
         x='Correlation',
@@ -51,7 +53,7 @@ def render_fine_violation_tab(violations_df):
         font_color='white'
     )
 
-    # --- Time Series Comparison Plots ---
+    # --- Time Series Data ---
     sorted_labels = (
         corr_result
         .set_index('ShortLabel')
@@ -70,6 +72,7 @@ def render_fine_violation_tab(violations_df):
         .reset_index()
     )
 
+    # --- Generate Small Multiples (Time Series Graphs) ---
     time_series_graphs = []
     for label in sorted_labels['ShortLabel']:
         subset = plot_df[plot_df['ShortLabel'] == label]
@@ -112,14 +115,14 @@ def render_fine_violation_tab(violations_df):
 
         time_series_graphs.append(dcc.Graph(figure=fig))
 
-    # Build layout
+    # --- Layout ---
     return dbc.Container([
         html.H4("Fine-Violation Relationships", className="mb-4"),
-        dcc.Graph(figure=fig_corr, className="mb-4"),
-        html.Hr(),
+        dcc.Graph(figure=fig_corr, className="mb-5"),
+        html.Hr(className="mb-4"),
         html.H5("Yearly Trends for Top Violation Types", className="mb-3"),
         dbc.Row([
-            dbc.Col(time_series_graphs[i], md=6)
+            dbc.Col(time_series_graphs[i], md=6, className="mb-4")
             for i in range(len(time_series_graphs))
         ])
-    ], fluid=True)
+    ], fluid=True, className="mt-4")
