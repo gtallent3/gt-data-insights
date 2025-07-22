@@ -1,6 +1,6 @@
 from dash import html, dcc, Input, Output
 import dash_bootstrap_components as dbc
-from components.metrics import generate_metric_cards
+from ..components.metrics import generate_metric_cards
 
 def render_overview(df):
     return dbc.Container([
