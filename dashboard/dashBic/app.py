@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, Input, Output
 import dash_bootstrap_components as dbc
 
-from data.loadData import load_and_prepare_data
+from .data.loadData import load_and_prepare_data
 from layout.overview import render_overview, register_overview_callbacks
 from layout.trends import render_trends
 from layout.violationCategories import render_violation_categories
