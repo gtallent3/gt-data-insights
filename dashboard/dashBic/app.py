@@ -17,7 +17,7 @@ complaints_df, violations_df = load_and_prepare_data()
 # --- Dash App Setup ---
 app = dash.Dash(
     __name__,
-    requests_pathname_prefix='/dashboard/',  # 👈 This allows subpath routing!
+    #requests_pathname_prefix='/dashboard/',  # 👈 This allows subpath routing!
     external_stylesheets=["https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css"],
     suppress_callback_exceptions=True
 )
