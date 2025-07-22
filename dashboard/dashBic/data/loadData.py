@@ -1,5 +1,5 @@
 import pandas as pd
-from helpers.utils import get_short_label
+from ..helpers.utils import get_short_label
 
 def load_and_prepare_data():
     complaints = pd.read_csv("https://drive.google.com/uc?export=download&id=1OHuktLCuMQLOPM3igyxDeFr7U2iTfKEH")
