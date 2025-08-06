@@ -40,6 +40,11 @@ def load_and_prepare_data():
     df['Date'] = pd.to_datetime(df['Date'], format='%m/%d/%Y', errors='coerce')
     df['Pnl'] = pd.to_numeric(df['Pnl'], errors='coerce')
 
+    if 'Daily Goal' in df.columns:
+        df['Daily Goal'] = pd.to_numeric(df['Daily Goal'], errors='coerce')
+    else:
+        df['Daily Goal'] = None  # fallback column if not present
+
     return df.dropna(subset=['Date', 'Instrument', 'Pnl'])
 
 def append_new_entry(date, instrument, pnl):
