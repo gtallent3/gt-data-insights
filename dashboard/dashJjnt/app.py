@@ -17,13 +17,13 @@ app = dash.Dash(
     external_stylesheets=["https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css"],
     suppress_callback_exceptions=True
 )
-app.title = "JJNT Data Dashboard"
+app.title = "Target Trading Pro Data Dashboard"
 server = app.server
 
 # --- App Layout ---
 app.layout = dbc.Container([
     dbc.NavbarSimple(
-        brand="JJNT Data Dashboard", color="primary", dark=True, fluid=True, className="mb-4"
+        brand="Target Trading Pro Dashboard", color="primary", dark=True, fluid=True, className="mb-4"
     ),
     dbc.Tabs([
         dbc.Tab(label="Overview & Summary", tab_id="overview"),
@@ -48,7 +48,7 @@ def render_tab_content(tab):
     elif tab == "c3":
         return html.Div("Computer 3 content coming soon.")
     else:
-        return html.Div("Welcome to the JJNT Data Dashboard.")
+        return html.Div("Welcome to the TTP Data Dashboard.")
 
 # --- Google Sheets Setup (only for dev print logging) ---
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
