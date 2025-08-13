@@ -17,13 +17,13 @@ app = dash.Dash(
     external_stylesheets=["https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css"],
     suppress_callback_exceptions=True
 )
-app.title = "Target Trading Pro Data Dashboard"
+app.title = "Targets Trading Pro Data Dashboard"
 server = app.server
 
 # --- App Layout ---
 app.layout = dbc.Container([
     dbc.NavbarSimple(
-        brand="Target Trading Pro Dashboard", color="primary", dark=True, fluid=True, className="mb-4"
+        brand="Targets Trading Pro Dashboard", color="primary", dark=True, fluid=True, className="mb-4"
     ),
     dbc.Tabs([
         dbc.Tab(label="Overview & Summary", tab_id="overview"),
