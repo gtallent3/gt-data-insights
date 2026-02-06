@@ -112,3 +112,279 @@ footer {
   text-align: center;
   margin-top: 1.5rem;
 }
+
+/* ===== NEW HOMEPAGE STYLES ===== */
+
+/* Hero — Business Landing */
+.hero-landing {
+  background: linear-gradient(135deg, #0a1628 0%, #0e2a4a 50%, #0a1628 100%);
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-landing .hero-content {
+  max-width: 700px;
+}
+
+.hero-landing h1 {
+  font-size: 3.2rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.hero-landing .highlight {
+  color: #4da6ff;
+}
+
+.hero-landing p {
+  font-size: 1.25rem;
+  color: #b0c4de;
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+
+.hero-landing .cta-button {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  background-color: #1a73e8;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.hero-landing .cta-button:hover {
+  background-color: #1665c1;
+  transform: translateY(-2px);
+}
+
+/* Section — Wide layout for homepage */
+.section-wide {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 3rem 2rem;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.section-wide h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.section-wide .section-subtitle {
+  text-align: center;
+  color: #999;
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+/* Pain points / feature grid */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.grid-card {
+  background: #222;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+  text-align: center;
+}
+
+.grid-card .card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.grid-card h3 {
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.grid-card p {
+  color: #aaa;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Pricing cards */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pricing-card {
+  background: #222;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.pricing-card:hover {
+  border-color: #1a73e8;
+}
+
+.pricing-card h3 {
+  font-size: 1.3rem;
+  color: #4da6ff;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-card .price {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 0.75rem 0;
+}
+
+.pricing-card .price-note {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin: 1rem 0;
+}
+
+.pricing-card ul li {
+  padding: 0.4rem 0;
+  color: #ccc;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.pricing-card ul li::before {
+  content: "\2713 ";
+  color: #4da6ff;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* CTA Banner */
+.cta-banner {
+  text-align: center;
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #0e2a4a, #1a3a5c);
+  border-radius: 12px;
+}
+
+.cta-banner h2 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.cta-banner p {
+  color: #b0c4de;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-banner .cta-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: #1a73e8;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.cta-banner .cta-button:hover {
+  background-color: #1665c1;
+  transform: translateY(-2px);
+}
+
+/* About page — expanded section */
+.about-section {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: #1a1a1a;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.about-section h2 {
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.about-section p {
+  color: #ccc;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+/* Contact page — enhanced */
+.contact-section {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #1a1a1a;
+  padding: 2.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.contact-section h2 {
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.contact-section p {
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.expect-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  max-width: 400px;
+  margin: 1.5rem auto;
+}
+
+.expect-list li {
+  padding: 0.5rem 0;
+  color: #ccc;
+  font-size: 1rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.expect-list li::before {
+  content: "\2713 ";
+  color: #4da6ff;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}

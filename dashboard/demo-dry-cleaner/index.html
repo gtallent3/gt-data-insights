@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CleanPro Dry Cleaners | Demo Dashboard</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #f5f5f5;
+    }
+
+    /* Nav */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: #111;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 1000;
+      padding: 0.5rem 0;
+    }
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar a {
+      color: #66b2ff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .navbar a:hover { text-decoration: underline; }
+
+    /* Demo banner */
+    .demo-banner {
+      background: linear-gradient(135deg, #0e2a4a, #1a3a5c);
+      text-align: center;
+      padding: 1rem;
+    }
+    .demo-banner p {
+      margin: 0;
+      color: #b0c4de;
+      font-size: 0.95rem;
+    }
+    .demo-banner a {
+      color: #4da6ff;
+      text-decoration: underline;
+    }
+
+    /* Dashboard header */
+    .dash-header {
+      max-width: 1200px;
+      margin: 2rem auto 1rem;
+      padding: 0 1.5rem;
+    }
+    .dash-header h1 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin: 0 0 0.25rem 0;
+    }
+    .dash-header p {
+      color: #888;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    /* KPI row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+    }
+    .kpi-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #2a2a2a;
+    }
+    .kpi-card .kpi-label {
+      color: #888;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .kpi-card .kpi-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+    .kpi-card .kpi-change {
+      font-size: 0.85rem;
+      margin-top: 0.4rem;
+    }
+    .kpi-change.up { color: #4caf50; }
+    .kpi-change.down { color: #f44336; }
+
+    /* Chart grid */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+    }
+    .chart-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 1.5rem;
+      border: 1px solid #2a2a2a;
+    }
+    .chart-card h3 {
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 0 0 1rem 0;
+    }
+    .chart-card canvas {
+      width: 100% !important;
+      max-height: 300px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      color: #888;
+      font-size: 0.9rem;
+      padding-bottom: 1rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+      .kpi-card .kpi-value {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/dashboard/">Dashboard</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="demo-banner">
+    <p>This is a demo dashboard with sample data. <a href="/contact/">Want one for your business?</a></p>
+  </div>
+
+  <div class="dash-header">
+    <h1>CleanPro Dry Cleaners</h1>
+    <p>Business Dashboard &mdash; January 2026</p>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">Monthly Revenue</div>
+      <div class="kpi-value">$12,450</div>
+      <div class="kpi-change up">+8.3% vs last month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Total Orders</div>
+      <div class="kpi-value">342</div>
+      <div class="kpi-change up">+12 vs last month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg. Ticket</div>
+      <div class="kpi-value">$36.40</div>
+      <div class="kpi-change up">+$1.20 vs last month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Customer Retention</div>
+      <div class="kpi-value">78%</div>
+      <div class="kpi-change down">-2% vs last month</div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Monthly Revenue (Last 6 Months)</h3>
+      <canvas id="revenueChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Orders by Day of Week</h3>
+      <canvas id="ordersChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Revenue by Service Type</h3>
+      <canvas id="serviceChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Customer Visits (Last 6 Months)</h3>
+      <canvas id="visitsChart"></canvas>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 GT Data & Insights &mdash; Demo Dashboard
+  </footer>
+
+  <script>
+    var chartFontColor = '#aaa';
+    var gridColor = 'rgba(255,255,255,0.08)';
+
+    Chart.defaults.color = chartFontColor;
+    Chart.defaults.borderColor = gridColor;
+
+    // Monthly Revenue - Line Chart
+    new Chart(document.getElementById('revenueChart'), {
+      type: 'line',
+      data: {
+        labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+        datasets: [{
+          label: 'Revenue ($)',
+          data: [9800, 10200, 10850, 11100, 11500, 12450],
+          borderColor: '#4da6ff',
+          backgroundColor: 'rgba(77, 166, 255, 0.1)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#4da6ff'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              callback: function(v) { return '$' + v.toLocaleString(); }
+            },
+            grid: { color: gridColor }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+
+    // Orders by Day of Week - Bar Chart
+    new Chart(document.getElementById('ordersChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Orders',
+          data: [52, 61, 48, 55, 68, 42, 16],
+          backgroundColor: [
+            '#1a73e8', '#2196f3', '#42a5f5',
+            '#1a73e8', '#2196f3', '#42a5f5', '#90caf9'
+          ],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: gridColor }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+
+    // Revenue by Service Type - Doughnut Chart
+    new Chart(document.getElementById('serviceChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Dry Cleaning', 'Laundry', 'Alterations', 'Special Care'],
+        datasets: [{
+          data: [5200, 3800, 2100, 1350],
+          backgroundColor: ['#1a73e8', '#4da6ff', '#90caf9', '#bbdefb'],
+          borderColor: '#1a1a1a',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { padding: 16, usePointStyle: true }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return ctx.label + ': $' + ctx.parsed.toLocaleString();
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Customer Visits - Line Chart
+    new Chart(document.getElementById('visitsChart'), {
+      type: 'line',
+      data: {
+        labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+        datasets: [{
+          label: 'Unique Customers',
+          data: [185, 192, 198, 205, 210, 218],
+          borderColor: '#4caf50',
+          backgroundColor: 'rgba(76, 175, 80, 0.1)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#4caf50'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            grid: { color: gridColor }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
