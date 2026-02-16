@@ -484,3 +484,37 @@ footer {
   color: #4da6ff;
   text-decoration: underline;
 }
+
+/* Screenshot gallery */
+.screenshot-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.screenshot-item {
+  background: #222;
+  border-radius: 10px;
+  border: 1px solid #333;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+.screenshot-item h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.screenshot-item p {
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.screenshot-item img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
